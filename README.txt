@@ -3,6 +3,7 @@ Emilia Segura, 40138440
 Assignment 3
 
 Menu:
+-Same functionality as assignment 1, implemented with vector
 
 MiniDB:
 
