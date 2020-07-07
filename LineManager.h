@@ -1,3 +1,5 @@
+//Emilia Segura, 40138440
+
 #ifndef LINEMANAGER_H
 #define LINEMANAGER_H
 

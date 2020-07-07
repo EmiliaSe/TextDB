@@ -1,3 +1,5 @@
+//Emilia Segura, 40138440
+
 #ifndef MINIDB_H
 #define MINIDB_H
 

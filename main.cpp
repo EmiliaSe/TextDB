@@ -1,3 +1,5 @@
+//Emilia Segura, 40138440
+
 
 #include "LineManager.h"
 
