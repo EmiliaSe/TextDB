@@ -11,7 +11,7 @@
 class LineManager{
 
 private:
-    MiniDB<std::string> line_db;
+    MiniDB<std::string> line_db; 
     Menu partial_menu; 
     Menu  full_menu;  
 
@@ -40,6 +40,9 @@ private:
 
 public:
     LineManager(); //default constructor (creates the menus)
+    LineManager(const LineManager& lm) = delete; //there should only be one instance of LineManager delete copy constructor
+    LineManager& operator=(const LineManager& lm) = delete; //same no use for copy assignment
+    virtual ~LineManager() = default; //default destructor
     void run();
 };
 

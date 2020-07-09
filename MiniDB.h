@@ -17,7 +17,11 @@ typename std::list<T>::iterator current_position;
 
 public:
 
-//special member functions. see 4.2.1 do I have to do anything????
+//special member functions all defaulted
+MiniDB<T>() = default;
+MiniDB<T>(const MiniDB<T>& mi)= default;
+virtual ~MiniDB<T>() = default; //destructor
+MiniDB<T>& operator=(const MiniDB<T>& m) = default; 
 
 size_t size() const;
 void insert(const T& item);
