@@ -5,7 +5,6 @@
 #include <string>
 #include <stdexcept>
 
-
 #include "MiniDB.h"
 #include "Menu.h"
 #include "LineManager.h"
@@ -18,7 +17,7 @@ using std::ofstream;
 using std::string;
 using std::size_t;
 
-LineManager::LineManager() //constructor creates LineManager with both menus
+LineManager::LineManager() //constructor creates LineManager with both menu objects
 { 
     create_fullmenu();
     create_partialmenu();
@@ -68,7 +67,7 @@ void LineManager::run()
 
             case 1:
                 append_key();
-                change =true;
+                change =true; //indicates a change to the database, (for use in option 12 save before quit)
                 break;
 
             case 2:
@@ -94,7 +93,7 @@ void LineManager::run()
         }
         else
         { //full menu!
-            i = full_menu.read_option_number();
+            i = full_menu.read_option_number(); //displays full menu and receives user input
 
             switch (i)  //switch case for full menu 
             {
@@ -194,7 +193,7 @@ void LineManager::append_file(){ //option 3
     while (getline(fin, line)){ //read until no lines left
         line_db.append(line); //append each line
     }
-    fin.close();
+    fin.close(); //close file input stream
 }
 void LineManager::insert_file(){ //option 4
     if (line_db.size() == 0){ //if db is empty, insert same as appending
@@ -209,12 +208,12 @@ void LineManager::insert_file(){ //option 4
             line_db.next(); //so the lines gets input in proper order
         }
         fin.close();
-        line_db.prev();
+        line_db.prev(); //moves iterator to correct position
     }
 }
 
 void LineManager::print_current(){ //option 5
-    cout << line_db.getCurrentIndex()+1 << ":  " << line_db.getValue() << endl; //makes index 1 based
+    cout << line_db.getCurrentIndex()+1 << ":  " << line_db.getValue() << endl; //makes index 1 based. prints line along with its index
 }
 
 void LineManager::print_span(){ //option 6
@@ -236,7 +235,7 @@ void LineManager::print_span(){ //option 6
         cout << stop+1 << ":  " << line_db.getValue() << endl; //get last value
     }
     catch (const std::logic_error& e){
-    cout << "**: EOF"<< endl;
+    cout << "**: EOF"<< endl; //print end of file message if lower span is larger than number of items to print
     }
 } 
 
@@ -274,7 +273,6 @@ void LineManager::print_all(){  //option 8
     cout << line_db.size() << ":  " << line_db.getValue() << endl; //get last value
 }
 
-//testing a new version
 void LineManager::move_current(){ //option 9
     cout << "Which line do you want to move to?" << endl;
     try{
@@ -291,17 +289,16 @@ void LineManager::delete_current(){ //option 10
     cout << "current line deleted" <<endl;
 } 
 
-//maybe adjust as this will create a file to write to if it doesn't exist
 void LineManager::write_to_file(){ //option 11
     ofstream fout;
-    openFile(fout);
-    line_db.moveToFirst();
-    for (size_t i{1}; i <line_db.size(); i++){ //wirtes to file line by line
+    openFile(fout); //error checking and opens ofstream
+    line_db.moveToFirst(); //moves iterator to start of DB
+    for (size_t i{1}; i <line_db.size(); i++){ //writes to file line by line
         fout << line_db.getValue() << '\n';
         line_db.next();
     }
     fout << line_db.getValue() << '\n'; //last value outside of loop so line_db.next() does not go out of bounds
-    fout.close();
+    fout.close(); //closes ofstream
 } 
 
 bool LineManager::quit(bool& change) { //option 12
@@ -331,13 +328,13 @@ void LineManager::openFile(ifstream &fin, const string &prompt){ //from posted l
     }
 }
 
-//will this be needed in this form as a file is created if does not exist?
+//While it is very unlikely for ofstream to fail at opening a file, still useful to put this check (eg. trying to open a file that is read-only)
 void LineManager::openFile(ofstream &fout, const string &prompt){
     while (true){
         cout << prompt;
         string filename{};
         getline(cin, filename);     
-        fout.open(filename); // try to open the file removed .c_str()
+        fout.open(filename); // try to open the file. A new file is created if it doesn't already exist
         if (fout){                    
             break;
         }

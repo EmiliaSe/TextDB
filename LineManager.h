@@ -34,16 +34,15 @@ private:
     void write_to_file(); //option 11
     bool quit(bool& change); //option 12
 
-    int readInt_in_range();
-    void openFile(std::ifstream & fin, const std::string & prompt = "Enter input file name: ");
-    void openFile(std::ofstream & fout, const std::string & prompt = "Enter ouput file name: ");
+    void openFile(std::ifstream & fin, const std::string & prompt = "Enter input file name: "); //checks open file for input
+    void openFile(std::ofstream & fout, const std::string & prompt = "Enter ouput file name: "); //checks open file for output
 
 public:
     LineManager(); //default constructor (creates the menus)
     LineManager(const LineManager& lm) = delete; //there should only be one instance of LineManager delete copy constructor
     LineManager& operator=(const LineManager& lm) = delete; //same no use for copy assignment
     virtual ~LineManager() = default; //default destructor
-    void run();
+    void run(); //only function used in main. Runs the program
 };
 
 #endif
