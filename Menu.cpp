@@ -12,9 +12,7 @@ using std::ostream;
 using std::string;
 
 //default constructor
-Menu::Menu(){
-top_message ="";
-bottom_message = "";
+Menu::Menu(): top_message{""}, bottom_message{""} {
 }
 
 void Menu::set_top_message(const string& t){
@@ -64,7 +62,7 @@ string Menu::toString() const{
         return "\n??";
     }
     else { //appends line by line to a single string that represents the whole menu
-        string m{"\n"};
+        string m{"\n"}; //blank line at top
         m+=top_message;
         m+="\n";
         for (std::size_t i = 0; i < size(); ++i) { //all the menu options
@@ -83,12 +81,12 @@ void Menu::insert(int index, const std::string& option){
     }
     else{
 
-    option_list.insert(option_list.begin()+index-1, option);
+    option_list.insert(option_list.begin()+index-1, option); //-1 to correct for user 1-based index
     }
 } //insert option into menu   
 
 
-void Menu::remove(int index){ //1 based-index
+void Menu::remove(int index){ //1 based-index, remove option at any index
     if (isEmpty()){
         std::cout << "ERROR no options to remove" << std::endl; //case empty list
     }
@@ -98,20 +96,19 @@ void Menu::remove(int index){ //1 based-index
     else{
         option_list.erase(option_list.begin()+index-1);
     }
-
-} //remove option at any index
+} 
 
 int Menu::read_option_number(){
-    std::cout << toString() <<" "; //print out whole menu 
+    cout << toString() <<" "; //print out whole menu 
     int choice = readInt(); //delegate error checking to readInt
     if (isEmpty()){   //if option list is empty, accepts any int
         return choice;
     }
     else{ 
     while (choice >size() || choice < 1) { //if not empty, only accepts in correct range
-        std::cout <<"Invalid choice " << choice << ". It must be in the range [1, " << size()<<"]"<<std::endl;
-        std::cout << toString()<< " "; //prints whole menu until input is valid  //removed endl
-        std::cin >> choice;
+        cout <<"Invalid choice " << choice << ". It must be in the range [1, " << size()<<"]"<<endl;
+        cout << toString()<< " "; //prints whole menu until input is valid  
+        choice = readInt(); //reads new choice (still checks if input is valid int)
     }
     return choice; //returns an int in valid range of menu options
     }
@@ -122,7 +119,6 @@ ostream& operator<<(ostream & sout, const Menu& me) //overloading operation to p
 sout << me.toString();
    return sout;
 }
-
 
 //error checking for user input. only accepts int. very close to what was presented in a lecture. Is used in Menu and LineManager, choice to implement as free function so can be easily reused
 int readInt(){

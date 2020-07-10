@@ -16,7 +16,7 @@ std::string top_message;
 std::string bottom_message;
 
 
-public: //all of these copied from assignemnt 1 with some slight modifications. 
+public: 
 
 Menu(); //default constructor
 Menu(const Menu& mnu) = default; //default copy constructor
