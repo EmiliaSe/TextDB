@@ -24,19 +24,18 @@ virtual ~MiniDB<T>() = default; //destructor
 MiniDB<T>& operator=(const MiniDB<T>& m) = default; 
 
 size_t size() const;
-void insert(const T& item);
-void append(const T& item);
-void prev();
+void insert(const T& item); //inserts at current_position
+void append(const T& item); //appends to end
+void prev(); //move iterator
 void next();
-T remove();
-void moveToFirst();
+T remove(); //remove at current_position
+void moveToFirst(); //move iterator
 void moveToLast();
 size_t getCurrentIndex() const; 
 void moveToIndex(size_t index);
 const T& getValue() const; // returns the value at the current position
-
 };
-//Implementation of all functions here
+//Implementation of all functions here. In same file since MiniDB is a class template
 
 template<typename T>
 size_t MiniDB<T>::size() const{ //returns size
