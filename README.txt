@@ -1,4 +1,4 @@
-Emilia Segura, 40138440
+Emilia Segura
 
 Assignment 3
 
